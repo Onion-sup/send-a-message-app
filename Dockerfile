@@ -18,9 +18,9 @@ RUN apk update && apk add --no-cache python3 && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache
 RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
-COPY --from=build-front /app/dist ./frontend/build
+COPY --from=build-front /app/dist ./client/frontend/dist
 COPY ./backend ./backend
 RUN cd ./backend && pip install -r requirements.txt
 RUN pip install gunicorn eventlet==0.30.2
 CMD cd ./backend && \
-    gunicorn -k eventlet -b 0.0.0.0:5000 app:app
+    gunicorn -k eventlet -b 0.0.0.0:$PORT app:app

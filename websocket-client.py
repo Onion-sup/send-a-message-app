@@ -19,4 +19,4 @@ def disconnect():
     print("I'm disconnected!")
 
 if __name__ == '__main__':
-    sio.connect('http://localhost:5000', wait_timeout = 10)
+    sio.connect('https://post-a-message.herokuapp.com', wait_timeout = 10)
