@@ -2,7 +2,8 @@ import threading
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from tcp_server import TcpServer
-
+tcp_server = TcpServer(5001)
+tcp_server.start()
 # instantiate the app
 app = Flask(__name__, static_folder='../frontend/dist/', static_url_path='/')
 app.config.from_object(__name__)
@@ -24,8 +25,6 @@ def post_message():
     return jsonify(response_object)
 
 if __name__ == '__main__':
-    tcp_server = TcpServer(5001)
-    tcp_server.start()
     app.run()
-    tcp_server.stop()
+
     

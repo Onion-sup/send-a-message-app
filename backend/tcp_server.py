@@ -56,6 +56,7 @@ class TcpServer:
 
     def send_data(self, data_dict):
         if self.conn:
+            print('[TcpServer][send_data] {}'.format(data_dict))
             data_str = json.dumps(data_dict)
             self.conn.send(data_str.encode())
     
