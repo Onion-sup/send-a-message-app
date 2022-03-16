@@ -1,14 +1,13 @@
 import threading
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import socket
-from tcp_client import TcpClient 
+from tcp_server import TcpServer
 
 # instantiate the app
-app = Flask(__name__, static_folder='../client/frontend/dist/', static_url_path='/')
+app = Flask(__name__, static_folder='../frontend/dist/', static_url_path='/')
 app.config.from_object(__name__)
 
-# enable CORS
+# enable COR
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/')
@@ -20,13 +19,13 @@ def post_message():
     response_object = {'status': 'success'}
     post_data = request.get_json()
     print(post_data)
-    tcp_client.send_message("hello")
+    tcp_server.send_data({'msg': 'hello'}) 
     response_object['message'] = 'Message sent'
     return jsonify(response_object)
 
 if __name__ == '__main__':
-    tcp_client = TcpClient()
-    tcp_client.connect()
+    tcp_server = TcpServer(5001)
+    tcp_server.start()
     app.run()
-    tcp_client.close()
+    tcp_server.stop()
     

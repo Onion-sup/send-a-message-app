@@ -16,7 +16,7 @@ import socket
 # connect to. Here, we're connecting to the server on the same machine
 # (127.0.0.1 is the "loopback" address).
 SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 5000
+SERVER_PORT = 5001
 
 # Create the socket
 c = socket.socket()
@@ -37,22 +37,22 @@ except NameError:
 
 print("Connected to " + str((SERVER_ADDRESS, SERVER_PORT)))
 while True:
-    try:
-        data = input("Enter some data: ")
-    except EOFError:
-        print("\nOkay. Leaving. Bye")
-        break
+    # try:
+    #     data = input("Enter some data: ")
+    # except EOFError:
+    #     print("\nOkay. Leaving. Bye")
+    #     break
 
-    if not data:
-        print("Can't send empty string!")
-        print("Ctrl-D [or Ctrl-Z on Windows] to exit")
-        continue
+    # if not data:
+    #     print("Can't send empty string!")
+    #     print("Ctrl-D [or Ctrl-Z on Windows] to exit")
+    #     continue
 
-    # Convert string to bytes. (No-op for python2)
-    data = data.encode()
+    # # Convert string to bytes. (No-op for python2)
+    # data = data.encode()
 
-    # Send data to server
-    c.send(data)
+    # # Send data to server
+    # c.send(data)
 
     # Receive response from server
     data = c.recv(2048)

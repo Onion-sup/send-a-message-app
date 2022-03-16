@@ -9,6 +9,7 @@ RUN npm run build
  
 # Launch app
 FROM nginx:stable-alpine as production
+EXPOSE 5000/tcp
 WORKDIR /app
 RUN apk update && apk add --no-cache python3 && \
     python3 -m ensurepip && \
@@ -23,4 +24,4 @@ COPY ./backend ./backend
 RUN cd ./backend && pip install -r requirements.txt
 RUN pip install gunicorn eventlet==0.30.2
 CMD cd ./backend && \
-    gunicorn -k eventlet -b 0.0.0.0:$PORT app:app
+    gunicorn -k eventlet -b 0.0.0.0:5000 app:app
