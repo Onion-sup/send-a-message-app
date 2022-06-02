@@ -1,6 +1,0 @@
-FROM python:3.10
-
-WORKDIR /app
-COPY ./server .
-
-CMD python3 tcp_server.py $PORT

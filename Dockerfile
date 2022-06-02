@@ -9,7 +9,8 @@ RUN npm run build
  
 # Launch app
 FROM nginx:stable-alpine as production
-EXPOSE 5000 5001
+ENV PORT=${PORT}
+EXPOSE ${PORT}
 WORKDIR /app
 RUN apk update && apk add --no-cache python3 && \
     python3 -m ensurepip && \
@@ -22,6 +23,6 @@ RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 COPY --from=build-front /app/dist ./frontend/dist
 COPY ./backend ./backend
 RUN cd ./backend && pip install -r requirements.txt
-RUN pip install gunicorn eventlet==0.30.2
+RUN pip install gunicorn
 CMD cd ./backend && \
-    gunicorn -k eventlet -b 0.0.0.0:5000 app:app
+    gunicorn -b 0.0.0.0:${PORT} app:app

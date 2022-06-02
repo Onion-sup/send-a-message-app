@@ -39,7 +39,6 @@
 }
 </style>
 <script>
-  var baseUrl = window.location.origin
   export default {
     data: () => ({
       password: 'Password',
@@ -70,7 +69,9 @@
         this.marker = !this.marker
       },
       sendMessage () {
-        fetch(baseUrl + '/api/send-message', {
+        const apiHost = 'https://led-panel-service.herokuapp.com'
+        // const apiHost = 'http://localhost:5000'
+        fetch(apiHost +'/api/post-a-message/post', {
         method: 'POST',
         body: JSON.stringify({
           message: this.message
